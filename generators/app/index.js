@@ -70,15 +70,21 @@ var WebappTemplateGenerator = yeoman.generators.Base.extend({
       // all templates should end with "/"
       this.templateconfig = 'config/';
       this.templatescss = 'assets/css/scss/';
-      
+      this.templateindexfile = 'views/_index.html';
 
       // all in destination - should NOT end with "/"
       this.distpath = 'dist';
+      this.gulpfiles = 'gulp';
+      
       this.appscss = 'app/assets/scss';
       this.appfonts = 'app/assets/fonts';
       this.appimg = 'app/assets/img';
       this.appscripts = 'app/assets/scripts';
       this.appviews = 'app/views';
+
+      // index files 
+      this.appindexfile = 'app/index.html';
+
   },
 
   scaffoldFolders: function(){
@@ -89,7 +95,9 @@ var WebappTemplateGenerator = yeoman.generators.Base.extend({
       mkdirp(this.appimg);
       mkdirp(this.appscripts);
       mkdirp(this.appviews);
-      mkdirp(this.distpath);
+      //mkdirp(this.distpath);
+      mkdirp(this.gulpfiles);
+
   },
 
 
@@ -120,6 +128,9 @@ var WebappTemplateGenerator = yeoman.generators.Base.extend({
       git: function () {
         this.fs.copy(this.templatePath(this.templateconfig+'gitignore'),this.destinationPath('.gitignore'));
         this.fs.copy(this.templatePath(this.templateconfig+'gitattributes'),this.destinationPath('.gitattributes'));
+      },
+      csslint: function () {
+        this.fs.copy(this.templatePath(this.templateconfig+'.csslintrc'),this.destinationPath('.csslintrc'));
       },
       bower: function () {
         this.fs.copyTpl(this.templatePath(this.templateconfig+'_bower.json'),this.destinationPath('bower.json'));
@@ -155,13 +166,19 @@ var WebappTemplateGenerator = yeoman.generators.Base.extend({
         );
       },
       styles: function () {
-        var css = 'main.scss';
+        var css = '_main.scss';
         this.fs.copyTpl(
           this.templatePath(this.templatescss),
           this.destinationPath( this.appscss),
           {
             //includeBootstrap: this.includeBootstrap
           }
+        );
+      },
+      gulp: function () {  // 
+        this.fs.copyTpl(
+          this.templatePath('gulp'),
+          this.destinationPath('gulp')
         );
       },
       html: function () {
@@ -175,7 +192,7 @@ var WebappTemplateGenerator = yeoman.generators.Base.extend({
           bsPath += 'bootstrap/js/';
         }
       }
-      this.fs.copyTpl(this.templatePath('views/_index.html'),this.destinationPath('app/views/index.html'),
+      this.fs.copyTpl(this.templatePath(this.templateindexfile),this.destinationPath(this.appindexfile),
         {appname: this.appName}
       );
       
@@ -188,7 +205,10 @@ var WebappTemplateGenerator = yeoman.generators.Base.extend({
       skipMessage: this.options['skip-install-message'],
       skipInstall: this.options['skip-install'],
       callback: function () {
-        this.spawnCommand('gulp serve');
+        var startserver = chalk.magenta.bold('\nAfter Installation Running Gulp to start server \n');
+        console.log(startserver);
+        this.spawnCommand('gulp');
+
       }.bind(this) // bind the callback to the parent scope
 
     });
@@ -215,7 +235,7 @@ var WebappTemplateGenerator = yeoman.generators.Base.extend({
       directory: 'bower_components',
       exclude: ['bootstrap-sass', 'bootstrap.js'],
       ignorePath: /^(\.\.\/)*\.\./,
-      src: 'app/views/index.html'
+      src: this.appindexfile
     });
 
     if (this.includeSass) {

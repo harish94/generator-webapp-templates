@@ -1,0 +1,13 @@
+$vendor-path:"../../../lib/vendor/";
+
+$simple-line-font-path        : "/lib/simple-line-icons/fonts/" !default;
+$fa-font-path:        "/lib/font-awesome/fonts/" !default; // for referencing 
+
+
+
+@import "bower_components/bootstrap-sass/assets/stylesheets/bootstrap";
+
+//@import "../../../lib/vendor/bootstrap-sass/assets/stylesheets/bootstrap";
+//@import "../../../lib/vendor/font-awesome/scss/font-awesome";
+//@import "../../../lib/vendor/animate.css/animate";
+//@import "../../../lib/simple-line-icons/scss/simple-line-icons";
