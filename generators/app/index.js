@@ -96,8 +96,8 @@ var WebappTemplateGenerator = yeoman.generators.Base.extend({
   writing: {
       gulpfile: function () {
         this.fs.copyTpl(
-          this.templatePath('_gulp.js'),
-          this.destinationPath('gulp.js'),
+          this.templatePath('_gulpfile.js'),
+          this.destinationPath('gulpfile.babel.js'),
           {
             date: (new Date).toISOString().split('T')[0],
             name: this.appName,
@@ -122,50 +122,15 @@ var WebappTemplateGenerator = yeoman.generators.Base.extend({
         this.fs.copy(this.templatePath(this.templateconfig+'gitattributes'),this.destinationPath('.gitattributes'));
       },
       bower: function () {
+        this.fs.copyTpl(this.templatePath(this.templateconfig+'_bower.json'),this.destinationPath('bower.json'));
+
         var bowerJson = {
-          name: _s.slugify(this.appname),
-          private: true,
-          dependencies: {}
+          name: _s.slugify(this.appName),
+          version: this.pkg.version,
+          private: true
         }
-
-        if (this.includeBootstrap) {
-          if (this.includeSass) {
-            bowerJson.dependencies['bootstrap-sass'] = '~3.3.5';
-            bowerJson.overrides = {
-              'bootstrap-sass': {
-                'main': [
-                  'assets/stylesheets/_bootstrap.scss',
-                  'assets/fonts/bootstrap/*',
-                  'assets/javascripts/bootstrap.js'
-                ]
-              }
-            };
-          } else {
-            bowerJson.dependencies['bootstrap'] = '~3.3.5';
-            bowerJson.overrides = {
-              'bootstrap': {
-                'main': [
-                  'less/bootstrap.less',
-                  'dist/css/bootstrap.css',
-                  'dist/js/bootstrap.js',
-                  'dist/fonts/*'
-                ]
-              }
-            };
-          }
-        } else if (this.includeJQuery) {
-          bowerJson.dependencies['jquery'] = '~2.1.1';
-        }
-
-        if (this.includeModernizr) {
-          bowerJson.dependencies['modernizr'] = '~2.8.1';
-        }
-
-        this.fs.writeJSON('bower.json', bowerJson);
-        this.fs.copy(
-          this.templatePath(this.templateconfig+'bowerrc'),
-          this.destinationPath('.bowerrc')
-        );
+        //this.fs.writeJSON('bower.json', bowerJson);
+        this.fs.copy(this.templatePath(this.templateconfig+'bowerrc'),this.destinationPath('.bowerrc'));
       },  
       editorConfig: function () {
         this.fs.copy(
@@ -221,7 +186,11 @@ var WebappTemplateGenerator = yeoman.generators.Base.extend({
   install: function () {
     this.installDependencies({
       skipMessage: this.options['skip-install-message'],
-      skipInstall: this.options['skip-install']
+      skipInstall: this.options['skip-install'],
+      callback: function () {
+        this.spawnCommand('gulp serve');
+      }.bind(this) // bind the callback to the parent scope
+
     });
   },
 
