@@ -24,23 +24,11 @@
     "gulp-nodemon": "latest",
     "gulp-uglify": "latest",
     "gulp-util": "latest",
+    "lodash": "latest",
+    "gulp-connect" : "latest",
     "jshint-stylish": "latest",
-    "karma": "latest",
-    "karma-chrome-launcher": "latest",
-    "karma-coffee-preprocessor": "latest",
-    "karma-coverage": "latest",
-    "karma-firefox-launcher": "latest",
-    "karma-html2js-preprocessor": "latest",
-    "karma-jasmine": "latest",
-    "karma-ng-html2js-preprocessor": "latest",
-    "karma-phantomjs-launcher": "latest",
-    "karma-requirejs": "latest",
-    "karma-script-launcher": "latest",
-    "mocha": "latest",
-    "require-dir": "latest",
-    "requirejs": "latest",
-    "supertest": "latest",
-    "through": "latest"
+    "gulp-connect":"latest",
+     "gulp-watch" : "latest"
   },
   "eslintConfig": {
     "env": {

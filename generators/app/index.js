@@ -96,7 +96,7 @@ var WebappTemplateGenerator = yeoman.generators.Base.extend({
       mkdirp(this.appscripts);
       mkdirp(this.appviews);
       //mkdirp(this.distpath);
-      mkdirp(this.gulpfiles);
+      //mkdirp(this.gulpfiles);
 
   },
 
@@ -105,7 +105,7 @@ var WebappTemplateGenerator = yeoman.generators.Base.extend({
       gulpfile: function () {
         this.fs.copyTpl(
           this.templatePath('_gulpfile.js'),
-          this.destinationPath('gulpfile.babel.js'),
+          this.destinationPath('gulpfile.js'),
           {
             date: (new Date).toISOString().split('T')[0],
             name: this.appName,
@@ -131,6 +131,9 @@ var WebappTemplateGenerator = yeoman.generators.Base.extend({
       },
       csslint: function () {
         this.fs.copy(this.templatePath(this.templateconfig+'.csslintrc'),this.destinationPath('.csslintrc'));
+      },
+      server: function () {
+        //this.fs.copy(this.templatePath(this.templateconfig+'server.js'),this.destinationPath('server.js'));
       },
       bower: function () {
         this.fs.copyTpl(this.templatePath(this.templateconfig+'_bower.json'),this.destinationPath('bower.json'));
@@ -176,10 +179,7 @@ var WebappTemplateGenerator = yeoman.generators.Base.extend({
         );
       },
       gulp: function () {  // 
-        this.fs.copyTpl(
-          this.templatePath('gulp'),
-          this.destinationPath('gulp')
-        );
+        //this.fs.copyTpl(this.templatePath('gulp'),this.destinationPath('gulp'));
       },
       html: function () {
       var bsPath;
@@ -205,7 +205,7 @@ var WebappTemplateGenerator = yeoman.generators.Base.extend({
       skipMessage: this.options['skip-install-message'],
       skipInstall: this.options['skip-install'],
       callback: function () {
-        var startserver = chalk.magenta.bold('\nAfter Installation Running Gulp to start server \n');
+        var startserver = chalk.magenta.bold('\nRelax ! All Done and starting server using GULP \n');
         console.log(startserver);
         this.spawnCommand('gulp');
 
