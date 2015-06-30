@@ -1,14 +1,16 @@
 var gulp = require('gulp'),
-  connect = require('gulp-connect'),
+  webserver = require('gulp-webserver'),
   watch = require('gulp-watch'),
   less = require('gulp-less'),
   coffee = require('gulp-coffee');
  
 gulp.task('webserver', function() {
-  connect.server({
-    livereload: true,
-    root: ['.', '.tmp']
-  });
+   gulp.src('app')
+      .pipe(webserver({
+        livereload: true,
+        directoryListing: false,
+        open: true
+    }));
 });
  
 gulp.task('livereload', function() {

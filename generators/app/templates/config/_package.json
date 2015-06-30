@@ -28,7 +28,8 @@
     "gulp-connect" : "latest",
     "jshint-stylish": "latest",
     "gulp-connect":"latest",
-     "gulp-watch" : "latest"
+    "gulp-watch" : "latest",
+    "gulp-webserver" : "latest"
   },
   "eslintConfig": {
     "env": {

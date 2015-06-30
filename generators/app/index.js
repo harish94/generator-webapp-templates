@@ -75,6 +75,8 @@ var WebappTemplateGenerator = yeoman.generators.Base.extend({
       // all in destination - should NOT end with "/"
       this.distpath = 'dist';
       this.gulpfiles = 'gulp';
+      this.dev = 'dev';
+      
       
       this.appscss = 'app/assets/scss';
       this.appfonts = 'app/assets/fonts';
@@ -88,8 +90,10 @@ var WebappTemplateGenerator = yeoman.generators.Base.extend({
   },
 
   scaffoldFolders: function(){
-     
+      mkdirp(this.dev);
       mkdirp(this.distpath);
+      
+
       mkdirp(this.appscss);      
       mkdirp(this.appfonts);
       mkdirp(this.appimg);
@@ -232,7 +236,7 @@ var WebappTemplateGenerator = yeoman.generators.Base.extend({
     // wire Bower packages to .html
     wiredep({
       bowerJson: bowerJson,
-      directory: 'bower_components',
+      directory: 'app/lib',
       exclude: ['bootstrap-sass', 'bootstrap.js'],
       ignorePath: /^(\.\.\/)*\.\./,
       src: this.appindexfile
