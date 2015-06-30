@@ -22,6 +22,7 @@
     "gulp-load-plugins": "latest",
     "gulp-mocha": "latest",
     "gulp-nodemon": "latest",
+    "gulp-sass": "latest",
     "gulp-uglify": "latest",
     "gulp-util": "latest",
     "lodash": "latest",
